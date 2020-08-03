@@ -2,6 +2,19 @@
 img {
   width: 100%;
 }
+.card {
+  overflow: hidden;
+}
+.card-img {
+  border-radius: 0%;
+  object-fit: cover;
+  height: 100%;
+}
+
+.card-columns {
+  column-count: 2;
+}
+
 .logo {
   max-width: 200px;
 }
