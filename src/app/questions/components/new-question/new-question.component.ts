@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
+// Model
+import { ICategory, Iquestion } from '../../../models/data.model';
+
+// Services
+import { QuestionService } from '../../services/question.service';
+
 @Component({
   selector: 'app-new-question',
   templateUrl: './new-question.component.html',
@@ -7,9 +13,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewQuestionComponent implements OnInit {
 
-  constructor() { }
+  isNewCategory : Boolean = true;
+  categories: Array<ICategory>;
+
+  constructor( private questionService : QuestionService) { }
 
   ngOnInit(): void {
+    this.categories = this.questionService.getCategories();
   }
 
+  checkCategory() {
+    this.isNewCategory = !this.isNewCategory;
+  }
+
+  categoryChange(category: string) {
+    this.isNewCategory = (category == 'New category')? true : false;
+  }
+
+  saveQuestion(question : string) {
+    // this.questionService.saveQuestion(question);
+  }
 }
