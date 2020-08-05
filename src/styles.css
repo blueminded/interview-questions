@@ -18,11 +18,8 @@ img {
 .logo {
   max-width: 200px;
 }
-app-navbar {
-  width: 100%;
-}
 
 .navbar {
-  margin-bottom: 2rem;
+  margin-top: 4.2rem;
   width: 100%;
 }
