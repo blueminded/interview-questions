@@ -5,6 +5,7 @@ import { ICategory, IQuestion } from '../../../models/data.model';
 
 // Services
 import { QuestionService } from '../../services/question.service';
+import { NgForm } from '@angular/forms'; 
 
 @Component({
   selector: 'app-new-question',
@@ -12,8 +13,13 @@ import { QuestionService } from '../../services/question.service';
   styleUrls: ['./new-question.component.css'],
 })
 export class NewQuestionComponent implements OnInit {
-  isNewCategory: Boolean = true;
+  singleCategory : ICategory = { id: null, category: null };
   categories: Array<ICategory>;
+  answer : string;
+  questionCategories: Array<ICategory> = [];
+  questionAlert : boolean = false;
+  categoryAlert : boolean = false;
+  question: IQuestion = new IQuestion();
 
   constructor(private questionService: QuestionService) {}
 
@@ -21,15 +27,40 @@ export class NewQuestionComponent implements OnInit {
     this.categories = this.questionService.getCategories();
   }
 
-  checkCategory() {
-    this.isNewCategory = !this.isNewCategory;
-  }
-
   categoryChange(category: string) {
-    this.isNewCategory = category == 'New category' ? true : false;
+    this.questionCategories.push({ category });
   }
 
-  saveQuestion(question: string) {
-    // this.questionService.saveQuestion(question);
+  saveQuestion() {
+    if (this.inputValidate()) {
+      console.log('in here');
+      this.question.answers.push(this.answer);
+      this.question.categories = this.questionCategories;
+      this.questionService.saveQuestion(this.question);
+      
+    }
   }
+
+  removeCategory(index : number) {
+    this.questionCategories.splice(index, 1);
+  }
+
+  addNewCategory(category : string) {
+    if (category && category.split(' ').join('')) {
+      this.questionCategories.push({ category });
+    }
+  }
+
+  inputValidate() : boolean {
+    if (!this.question.question) {
+      this.questionAlert = true;
+      return false;
+    }
+    if (!this.questionCategories.length) {
+      this.categoryAlert = true;
+      return false;
+    }
+    return true;
+  }
+
 }

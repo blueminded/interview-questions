@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { someCategories, ICategory, Iquestion } from '../../models/data.model';
+import { someCategories, ICategory, IQuestion } from '../../models/data.model';
 
 
 @Injectable({
@@ -8,7 +8,7 @@ import { someCategories, ICategory, Iquestion } from '../../models/data.model';
 export class QuestionService {
 
   categories: Array<ICategory> = someCategories;
-  questions: Array<Iquestion>;
+  questions: Array<IQuestion>;
 
   constructor() { }
 
@@ -24,8 +24,8 @@ export class QuestionService {
     return this.categories;
   }
 
-  saveQuestion(incomingQuestion: string) {
-    // this.questions.push(incomingQuestion);
+  saveQuestion(newQuestion: IQuestion) {
+    console.log(newQuestion);    
   }
 
 }

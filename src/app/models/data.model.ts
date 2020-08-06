@@ -1,13 +1,21 @@
-export interface IQuestion {
-  id: string;
+export class IQuestion {
+  id?: string;
   question: string;
   answers: Array<String>;
   categories: Array<ICategory>;
+
+  constructor () {
+    this.id = null;
+    this.question = '';
+    this.answers = [];
+    this.categories = [];
+  }
 }
 
 export interface ICategory {
-  id: string;
+  id?: string;
   category: string;
+  questions?: Array<string>;
 }
 
 export const someCategories: Array<ICategory> = [

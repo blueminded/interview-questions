@@ -6,10 +6,16 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { QuestionsModule } from './questions/questions.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent, HomeComponent],
-  imports: [BrowserModule, AppRoutingModule, QuestionsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    QuestionsModule,
+    FormsModule
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
