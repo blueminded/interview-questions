@@ -8,7 +8,7 @@ import { IQuestion } from '../../models/data.model';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  questionList: IQuestion[];
+  questionList: IQuestion[] = [];
 
   constructor(private questionService: QuestionService) {}
 

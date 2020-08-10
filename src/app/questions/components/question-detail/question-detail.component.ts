@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionService } from '../../services/question.service';
-import { IQuestion, IAnswer } from '../../../models/data.model';
+import { IQuestion, IAnswer, ICategory } from '../../../models/data.model';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { CategoriesService } from '../../../categories/services/categories.service';
 
 @Component({
   selector: 'app-question-detail',
@@ -14,10 +15,12 @@ export class QuestionDetailComponent implements OnInit {
   question: IQuestion;
   answers: IAnswer[];
   newAnswer: string;
+  category: ICategory;
 
   constructor(
     private route: ActivatedRoute,
     private questionService: QuestionService,
+    private categoryService: CategoriesService,
     private router: Router
   ) {}
 
@@ -26,12 +29,18 @@ export class QuestionDetailComponent implements OnInit {
 
     this.questionService.getQuestion(id).subscribe((resp) => {
       this.question = resp;
-      console.log(this.question);
+
+      this.getCategory(this.question.categoryId);
     });
 
     this.questionService.getAnswersQuestion(id).subscribe((resp) => {
       this.answers = resp;
-      console.log(this.answers);
+    });
+  }
+
+  private getCategory(categoryId: string) {
+    this.categoryService.getCategory(categoryId).subscribe((resp) => {
+      this.category = resp;
     });
   }
 
@@ -48,33 +57,44 @@ export class QuestionDetailComponent implements OnInit {
       showCancelButton: true,
     }).then((resp) => {
       if (resp.value) {
-        this.questionService
-          .deleteQuestion(this.question)
-          .subscribe((response) => {
-            console.log(response);
-            this.router.navigate(['']);
-          });
+        const questionId = this.question.id;
+
+        let total = this.answers.length;
+
+        Swal.fire({
+          title: 'Wait',
+          text: 'Saving information',
+          icon: 'info',
+          allowOutsideClick: false,
+        });
+
+        Swal.showLoading();
+
+        this.answers.forEach((answer) => {
+          this.questionService
+            .deleteAnswerQuestion(questionId, answer.id)
+            .subscribe((resp) => {
+              total--;
+
+              if (total === 0) {
+                this.questionService
+                  .deleteQuestion(this.question)
+                  .subscribe((response) => {
+                    Swal.fire({
+                      title: 'Information',
+                      text: 'Question deleted successfully',
+                      icon: 'success',
+                    }).then((r) => {
+                      if (r.value) {
+                        this.router.navigate(['']);
+                      }
+                    });
+                  });
+              }
+            });
+        });
       }
     });
-  }
-
-  private showCompleteAlert() {
-    Swal.fire({
-      title: this.question.title,
-      text: 'Question deleted successfully',
-      icon: 'success',
-    });
-  }
-
-  private showLoadingAlert() {
-    Swal.fire({
-      title: 'Wait',
-      text: 'Saving information',
-      icon: 'info',
-      allowOutsideClick: false,
-    });
-
-    Swal.showLoading();
   }
 
   addNewAnswer(form: NgForm) {

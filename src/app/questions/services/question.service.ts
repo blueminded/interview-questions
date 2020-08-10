@@ -111,6 +111,15 @@ export class QuestionService {
     });
   }
 
+  deleteAnswerQuestion(questionId: string, answerId: string) {
+    return this.http.delete(
+      `${BASE_API_URL}/questions/${questionId}/answers/${answerId}`,
+      {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      }
+    );
+  }
+
   saveAnswer(answer: IAnswer) {
     return this.http
       .post(`${BASE_API_URL}/questions/${answer.questionId}/answers`, answer)

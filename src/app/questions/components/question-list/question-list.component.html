@@ -1,6 +1,9 @@
 <div class="card-columns">
   <div *ngFor="let item of items" class="card">
-    <img [src]="item.img_url" class="card-img-top" [alt]="item.title" />
+    <a [routerLink]="['/questions', item.id]"
+      ><img [src]="item.img_url" class="card-img-top" [alt]="item.title" />
+    </a>
+
     <div class="card-body">
       <h5 class="card-title">{{ item.title }}</h5>
       <p class="card-text">

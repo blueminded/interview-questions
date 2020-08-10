@@ -1,6 +1,11 @@
 <div *ngIf="question">
   <h1>{{ question.title }}</h1>
-  <div>Category | {{ question.createdAt | date }}</div>
+  <div *ngIf="category">
+    <a [routerLink]="['/categories', category.id]"
+      ><span>{{ category.name | titlecase }}</span></a
+    >
+    | {{ question.createdAt | date }}
+  </div>
 
   <div class="mt-2 mb-4">
     <img class="img-question" [src]="question.img_url" [alt]="question.title" />

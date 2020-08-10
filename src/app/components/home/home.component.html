@@ -1,2 +1,24 @@
-<h1>Recent questions</h1>
-<app-question-list [items]="questionList"></app-question-list>
+<div *ngIf="this.questionList.length">
+  <h1>Recent questions</h1>
+  <app-question-list [items]="questionList"></app-question-list>
+</div>
+
+<div *ngIf="this.questionList.length == 0" class="jumbotron">
+  <h1 class="display-3">Hello, Devs!</h1>
+  <p class="lead">
+    Welcome to Interview Questions. A website to share questions and answers so
+    that you can prepare better for your interviews.
+  </p>
+  <hr class="my-4" />
+  <p>
+    Feel free to create new questions and share your knowledge with your peers.
+  </p>
+  <p class="lead">
+    <a
+      role="button"
+      class="btn btn-primary btn-lg"
+      [routerLink]="['/new-question']"
+      >Start here</a
+    >
+  </p>
+</div>

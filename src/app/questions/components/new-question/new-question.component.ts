@@ -30,7 +30,8 @@ export class NewQuestionComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private categoriesService: CategoriesService,
-    private questionService: QuestionService
+    private questionService: QuestionService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -40,7 +41,6 @@ export class NewQuestionComponent implements OnInit {
       this.id = id;
       this.edit = true;
       this.questionService.getQuestion(this.id).subscribe((resp) => {
-        console.log(resp);
         this.title = resp.title;
         this.imageUrl = resp.img_url;
         this.categoryId = resp.categoryId;
@@ -141,7 +141,6 @@ export class NewQuestionComponent implements OnInit {
     this.questionService.updateQuestion(question).subscribe((resp) => {
       question = resp;
       this.updateAnswer(question);
-      console.log(resp);
     });
   }
 
@@ -177,6 +176,10 @@ export class NewQuestionComponent implements OnInit {
         ? 'Question updated successfully'
         : 'Question created successfully',
       icon: 'success',
+    }).then((resp) => {
+      if (resp.value) {
+        this.router.navigate(['']);
+      }
     });
   }
 }

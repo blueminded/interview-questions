@@ -19,7 +19,6 @@ export class CategoryDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      console.log(params);
       const id = params['category_id'];
 
       this.categoriesService.getCategory(id).subscribe((resp) => {
@@ -27,7 +26,6 @@ export class CategoryDetailComponent implements OnInit {
       });
 
       this.categoriesService.getCategoryQuestions(id).subscribe((resp) => {
-        console.log(resp);
         this.questionList = resp;
       });
     });
