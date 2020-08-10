@@ -1,1 +1,4 @@
-<p>category-detail works!</p>
+<h1 *ngIf="currentCategory">
+  Questions in: <strong>{{ currentCategory.name }}</strong>
+</h1>
+<app-question-list [items]="questionList"></app-question-list>

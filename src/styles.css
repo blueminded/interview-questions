@@ -11,6 +11,12 @@ img {
   height: 100%;
 }
 
+.img-question {
+  border-radius: 0%;
+  object-fit: cover;
+  height: 300px;
+}
+
 .card-columns {
   column-count: 2;
 }

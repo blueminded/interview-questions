@@ -1,0 +1,18 @@
+<div class="card-columns">
+  <div *ngFor="let item of items" class="card">
+    <img [src]="item.img_url" class="card-img-top" [alt]="item.title" />
+    <div class="card-body">
+      <h5 class="card-title">{{ item.title }}</h5>
+      <p class="card-text">
+        {{ item.excerpt }}
+      </p>
+      <p class="card-text">
+        <small class="text-muted">{{ item.createdAt | date }}</small>
+      </p>
+
+      <a [routerLink]="['/questions', item.id]" class="btn btn-primary"
+        >View more</a
+      >
+    </div>
+  </div>
+</div>

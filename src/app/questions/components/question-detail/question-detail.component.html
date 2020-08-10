@@ -1,1 +1,41 @@
-<p>question-detail works!</p>
+<div *ngIf="question">
+  <h1>{{ question.title }}</h1>
+  <div>Category | {{ question.createdAt | date }}</div>
+
+  <div class="mt-2 mb-4">
+    <img class="img-question" [src]="question.img_url" [alt]="question.title" />
+  </div>
+  <div class="mt-2 mb-4 text-center">
+    <button type="button" (click)="editQuestion()" class="btn btn-success mr-3">
+      Edit
+    </button>
+    <button type="button" (click)="deleteQuestion()" class="btn btn-danger">
+      Delete
+    </button>
+  </div>
+
+  <h2>Answers</h2>
+  <blockquote *ngFor="let answer of answers" class="blockquote">
+    <p>{{ answer.content }}</p>
+    <footer class="blockquote-footer">
+      <cite title="Source title">{{ answer.createdAt | date }}</cite>
+    </footer>
+  </blockquote>
+  <hr />
+
+  <form (ngSubmit)="addNewAnswer(f)" #f="ngForm" class="">
+    <div class="form-group">
+      <label for="content">Add a new Answer</label>
+      <textarea
+        [(ngModel)]="newAnswer"
+        name="newAnswer"
+        class="form-control"
+        id="content"
+        rows="4"
+      ></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary mt-4 float-right">
+      Add question
+    </button>
+  </form>
+</div>

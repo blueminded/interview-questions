@@ -1,41 +1,90 @@
 <div class="container">
-    <h2>Add a new question</h2>
-    <form class="">
-        <div class="form-group" (submit)="saveQuestion('SSS')">
-          <label for="exampleInputEmail1">Main question</label>
-          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your question" required>
-          <small id="emailHelp" class="form-text text-muted">What is an Angular decorator?</small>
-        </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Answer</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
-        </div>
-        <div class="row">
-            <div class="col">
-                <label for="exampleInputPassword1">Pick a category</label>
-                <select (change)="categoryChange($event.target.value)" class="form-control" required>
-                    <option>New category</option>
-                    <option *ngFor="let categoryItem of categories">{{ categoryItem.category }}</option>
-                </select>
-            </div>
-            <div class="col">
-                <label for="exampleInputPassword1">Need a new category ? Add it.</label>
-                <input 
-                    *ngIf="!isNewCategory"
-                    type="text"
-                    class="form-control"
-                    id="new-category"
-                    placeholder="- - -"
-                    disabled>
-                <input 
-                    *ngIf="isNewCategory"
-                    type="text" 
-                    class="form-control"
-                    id="new-category"
-                    placeholder="write the new category">
-                <small id="emailHelp" class="form-text text-muted">JavaScript, Lambdas, Asynchronous ...</small>
-            </div>
-        </div>        
-        <button type="submit" class="btn btn-primary mt-4 float-right">Add question</button>
-      </form>
+  <h2 *ngIf="!edit">Add a new question</h2>
+  <h2 *ngIf="edit">Edit this question</h2>
+  <form (ngSubmit)="handleForm(f)" #f="ngForm" class="">
+    <div class="form-group">
+      <label for="title">Question title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        name="title"
+        [(ngModel)]="title"
+        placeholder="Enter your question"
+        required
+      />
+      <small id="emailHelp" class="form-text text-muted"
+        >What is an Angular decorator?</small
+      >
+    </div>
+    <div class="form-group">
+      <label for="imageUrl">Image URL</label>
+      <input
+        type="text"
+        class="form-control"
+        id="imageUrl"
+        name="imageUrl"
+        [(ngModel)]="imageUrl"
+        placeholder="Enter your imageURL"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="answer">Answer</label>
+      <textarea
+        class="form-control"
+        id="answer"
+        name="answer"
+        [(ngModel)]="answer"
+        rows="4"
+      ></textarea>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label for="category_id">Pick a category</label>
+        <select
+          id="category_id"
+          name="categoryId"
+          [(ngModel)]="categoryId"
+          (change)="categoryChange($event.target.value)"
+          class="form-control"
+        >
+          <option value="New category">New category</option>
+          <option
+            *ngFor="let categoryItem of categories"
+            [value]="categoryItem.id"
+            >{{ categoryItem.name }}</option
+          >
+        </select>
+      </div>
+      <div class="col">
+        <label for="new_category">Need a new category ? Add it.</label>
+        <input
+          *ngIf="!isNewCategory"
+          type="text"
+          class="form-control"
+          id="new_category"
+          name="newCategory"
+          [(ngModel)]="newCategory"
+          placeholder="- - -"
+          disabled
+        />
+        <input
+          *ngIf="isNewCategory"
+          type="text"
+          class="form-control"
+          id="new_category"
+          name="newCategory"
+          [(ngModel)]="newCategory"
+        />
+
+        <small id="emailHelp" class="form-text text-muted"
+          >JavaScript, Lambdas, Asynchronous ...</small
+        >
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-4 float-right">
+      Save question
+    </button>
+  </form>
 </div>
