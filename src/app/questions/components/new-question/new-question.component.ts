@@ -5,7 +5,6 @@ import { ICategory, IQuestion } from '../../../models/data.model';
 
 // Services
 import { QuestionService } from '../../services/question.service';
-import { NgForm } from '@angular/forms'; 
 
 @Component({
   selector: 'app-new-question',
@@ -24,7 +23,10 @@ export class NewQuestionComponent implements OnInit {
   constructor(private questionService: QuestionService) {}
 
   ngOnInit(): void {
-    this.categories = this.questionService.getCategories();
+    this.questionService.getCategories()
+    .subscribe(answer => {
+      this.categories = answer;
+    });
   }
 
   categoryChange(category: string) {
@@ -37,7 +39,7 @@ export class NewQuestionComponent implements OnInit {
       this.question.answers.push(this.answer);
       this.question.categories = this.questionCategories;
       this.questionService.saveQuestion(this.question);
-      
+      this.questionService.addCategry(this.questionCategories);
     }
   }
 

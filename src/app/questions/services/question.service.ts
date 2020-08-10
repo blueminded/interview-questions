@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { someCategories, ICategory, IQuestion } from '../../models/data.model';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -7,25 +9,68 @@ import { someCategories, ICategory, IQuestion } from '../../models/data.model';
 })
 export class QuestionService {
 
-  categories: Array<ICategory> = someCategories;
+  categories: Array<ICategory> = [];
   questions: Array<IQuestion>;
+  categoriesArrayId: string = null;
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
-  getQuestionById () {
+  getQuestionById() {
     // TBD
   }
 
   getQuestions() {
-    return this.categories;
+    return this.httpClient.get('https://question-bank-6ffba.firebaseio.com/questions.json')
+      .pipe(
+        map(response => {
+          return this.toArray(response);
+        })
+      );
   }
 
   getCategories() {
-    return this.categories;
+    return this.httpClient.get('https://question-bank-6ffba.firebaseio.com/categories.json')
+      .pipe(
+        map(answer => {
+          this.getCategoriesArrayId(answer);
+          this.categories = answer[this.categoriesArrayId];
+
+          return this.categories;
+        }));
   }
 
   saveQuestion(newQuestion: IQuestion) {
-    console.log(newQuestion);    
+    this.httpClient.post('https://question-bank-6ffba.firebaseio.com/questions.json', newQuestion)
+      .subscribe(response => {
+        console.log(response);
+      });
+  }
+
+  addCategry(newCategory: Array<ICategory>) {
+    this.httpClient.post(`https://question-bank-6ffba.firebaseio.com/categories/${this.categoriesArrayId}.json`, newCategory)
+      .subscribe(response => {
+        console.log(response);
+      });
+  }
+
+  compareCategories() {
+
+  }
+
+  getCategoriesArrayId(answer: object) {
+    const ids: string[] = Object.keys(answer);
+    this.categoriesArrayId = ids[0];
+  }
+
+  toArray(response: object) {
+    const questionArray: IQuestion[] = [];
+    for (const key in response) {
+      if (response.hasOwnProperty(key)) {
+        const element = response[key];
+        questionArray.push(element);
+      }
+    }
+    return questionArray;
   }
 
 }
