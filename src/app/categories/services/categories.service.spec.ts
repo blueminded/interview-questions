@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { CategoriesService } from './categories.service';
-
+/*
 describe('CategoriesService', () => {
   let service: CategoriesService;
 
@@ -13,4 +13,4 @@ describe('CategoriesService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-});
+});*/
