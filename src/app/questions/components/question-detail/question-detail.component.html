@@ -33,7 +33,7 @@
           *ngFor="let categoryItem of question.categories; let i = index"
           class="badge badge-success d-inline mx-1 my-1 float-left"
         >
-          {{ categoryItem.category }} +
+          {{ categoryItem.category | titlecase }} +
         </span>
       </div>
     </div>

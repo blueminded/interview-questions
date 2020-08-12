@@ -7,6 +7,7 @@ import {
 } from '../../models/data.model';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { cleanCategories } from '../../helpers/helpers';
 
 @Injectable({
   providedIn: 'root',
@@ -58,19 +59,25 @@ export class QuestionService {
     );
   }
 
+  updateQuestion(question: IQuestion, questionId: string) {
+    return this.httpClient.put(
+      `https://question-bank-6ffba.firebaseio.com/questions/${questionId}.json`,
+      question
+    );
+  }
+
   addCategory(newCategory: Array<ICategory>) {
     if (this.categories.length) {
       this.categories = this.categories.concat(newCategory);
+      this.categories = cleanCategories(this.categories, 'category');
     }
-    console.log(this.categories, newCategory);
+
     this.httpClient
       .put(
         `https://question-bank-6ffba.firebaseio.com/categories/${this.categoriesArrayId}.json`,
         this.categories
       )
-      .subscribe((response) => {
-        console.log(response);
-      });
+      .subscribe((response) => {});
   }
 
   compareCategories() {}

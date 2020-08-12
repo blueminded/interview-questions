@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'categories/:category_id', component: CategoryDetailComponent },
   { path: 'details/:question_id', component: QuestionDetailComponent },
   { path: 'new-question', component: NewQuestionComponent },
-  { path: 'edit/:question_id', component: EditQuestionComponent },
+  { path: 'edit/:question_id', component: NewQuestionComponent },
   { path: '**', component: HomeComponent },
 ];
 

@@ -46,6 +46,7 @@ export class QuestionDetailComponent implements OnInit {
       });
 
       this.newAnswer.date = new Date().toDateString();
+
       const answer: IAnswer = {
         date: this.newAnswer.date,
         answer: this.newAnswer.answer,
