@@ -1,17 +1,22 @@
-<h1>Category : {{ category }}</h1>
+<h1>Category : {{ category | titlecase }}</h1>
 <div class="card-columns">
   <div *ngFor="let question of questions" class="card">
-    <img *ngIf="question.img" src="{{ question.img }}" class="card-img-top" alt="..." />
+    <img
+      *ngIf="question.img"
+      src="{{ question.img }}"
+      class="card-img-top"
+      alt="..."
+    />
     <div class="card-body">
       <h5 class="card-title">{{ question.question }}</h5>
       <p *ngIf="question.answers" class="card-text">
         {{ question.answers[0].answer }}
       </p>
-      <a [routerLink]="['/details', question.id ]" class="btn btn-primary">View more</a>
+      <a [routerLink]="['/details', question.id]" class="btn btn-primary"
+        >View more</a
+      >
     </div>
   </div>
-
 </div>
 
-
-<h1 *ngIf="!questions[0]">Not questions found</h1>
+<h2 *ngIf="!questions[0]">Not questions found</h2>
