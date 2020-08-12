@@ -1,70 +1,79 @@
 import { Injectable } from '@angular/core';
-import { someCategories, ICategory, IQuestion, IAnswer } from '../../models/data.model';
+import {
+  someCategories,
+  ICategory,
+  IQuestion,
+  IAnswer,
+} from '../../models/data.model';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class QuestionService {
-
   categories: Array<ICategory> = [];
   questions: Array<IQuestion>;
   categoriesArrayId: string = null;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
-  getQuestionById(id : string) {
-    return this.httpClient.get(`https://question-bank-6ffba.firebaseio.com/questions/${id}.json`)
-    .pipe(
-      map((response : IQuestion) => {
-        return response;
-      })
-    );
+  getQuestionById(id: string) {
+    return this.httpClient
+      .get(`https://question-bank-6ffba.firebaseio.com/questions/${id}.json`)
+      .pipe(
+        map((response: IQuestion) => {
+          return response;
+        })
+      );
   }
 
   getQuestions() {
-    return this.httpClient.get('https://question-bank-6ffba.firebaseio.com/questions.json')
+    return this.httpClient
+      .get('https://question-bank-6ffba.firebaseio.com/questions.json')
       .pipe(
-        map(response => {
+        map((response) => {
           return this.toArray(response);
         })
       );
   }
 
   getCategories() {
-    return this.httpClient.get('https://question-bank-6ffba.firebaseio.com/categories.json')
+    return this.httpClient
+      .get('https://question-bank-6ffba.firebaseio.com/categories.json')
       .pipe(
-        map(answer => {
+        map((answer) => {
           this.getCategoriesArrayId(answer);
           this.categories = answer[this.categoriesArrayId];
 
           return this.categories;
-        }));
+        })
+      );
   }
 
   saveQuestion(newQuestion: IQuestion) {
-    this.httpClient.post('https://question-bank-6ffba.firebaseio.com/questions.json', newQuestion)
-      .subscribe(response => {
-        console.log(response);
-      });
+    return this.httpClient.post(
+      'https://question-bank-6ffba.firebaseio.com/questions.json',
+      newQuestion
+    );
   }
 
-  addCategry(newCategory: Array<ICategory>) {
+  addCategory(newCategory: Array<ICategory>) {
     if (this.categories.length) {
       this.categories = this.categories.concat(newCategory);
     }
     console.log(this.categories, newCategory);
-    this.httpClient.put(`https://question-bank-6ffba.firebaseio.com/categories/${this.categoriesArrayId}.json`, this.categories)
-      .subscribe(response => {
+    this.httpClient
+      .put(
+        `https://question-bank-6ffba.firebaseio.com/categories/${this.categoriesArrayId}.json`,
+        this.categories
+      )
+      .subscribe((response) => {
         console.log(response);
       });
   }
 
-  compareCategories() {
-
-  }
+  compareCategories() {}
 
   getCategoriesArrayId(answer: object) {
     const ids: string[] = Object.keys(answer);
@@ -83,14 +92,16 @@ export class QuestionService {
     return questionArray;
   }
 
-  addNewAnswer(question : IQuestion, questionId : string) {
-    this.httpClient.put(`https://question-bank-6ffba.firebaseio.com/questions/${questionId}.json`, question)
-    .subscribe(response => {
-      console.log(response);
-    });
+  addNewAnswer(question: IQuestion, questionId: string) {
+    return this.httpClient.put(
+      `https://question-bank-6ffba.firebaseio.com/questions/${questionId}.json`,
+      question
+    );
   }
 
-  deleteQuestion(questionId : string) {
-    return this.httpClient.delete(`https://question-bank-6ffba.firebaseio.com/questions/${questionId}.json`);
+  deleteQuestion(questionId: string) {
+    return this.httpClient.delete(
+      `https://question-bank-6ffba.firebaseio.com/questions/${questionId}.json`
+    );
   }
 }

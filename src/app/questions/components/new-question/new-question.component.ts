@@ -5,6 +5,8 @@ import { ICategory, IQuestion, IAnswer } from '../../../models/data.model';
 
 // Services
 import { QuestionService } from '../../services/question.service';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-question',
@@ -12,23 +14,22 @@ import { QuestionService } from '../../services/question.service';
   styleUrls: ['./new-question.component.css'],
 })
 export class NewQuestionComponent implements OnInit {
-  
-  singleCategory : ICategory = { id: null, category: null };
+  singleCategory: ICategory = { id: null, category: null };
   categories: Array<ICategory>;
-  answer : IAnswer = { answer: '' };
+  answer: IAnswer = { answer: '' };
   questionCategories: Array<ICategory> = [];
-  questionAlert : boolean = false;
-  categoryAlert : boolean = false;
+  questionAlert: boolean = false;
+  categoryAlert: boolean = false;
   question: IQuestion = new IQuestion();
 
-  constructor(private questionService: QuestionService) {}
+  constructor(
+    private questionService: QuestionService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.questionService.getCategories()
-    .subscribe(answer => {
-      console.log(answer);
-      
-      this.categories = answer;
+    this.questionService.getCategories().subscribe((categories) => {
+      this.categories = categories;
     });
   }
 
@@ -38,29 +39,51 @@ export class NewQuestionComponent implements OnInit {
 
   saveQuestion() {
     if (this.inputValidate()) {
-      
-      this.answer.date = (this.answer.answer != '')? new Date().toDateString() : null;
+      this.answer.date =
+        this.answer.answer !== '' ? new Date().toDateString() : null;
       this.question.date = new Date().toDateString();
       this.question.answers.push(this.answer);
       this.question.categories = this.questionCategories;
-      console.log(this.question);
-      
-      this.questionService.saveQuestion(this.question);
-      this.questionService.addCategry(this.questionCategories); // Validar cuando agregar categoría y cuando no.
+
+      Swal.fire({
+        title: 'Wait',
+        text: 'Saving information',
+        icon: 'info',
+        allowOutsideClick: false,
+      });
+
+      this.questionService.saveQuestion(this.question).subscribe((response) => {
+        this.finishSave();
+      });
+      this.questionService.addCategory(this.questionCategories); // Validar cuando agregar categoría y cuando no.
     }
   }
 
-  removeCategory(index : number) {
+  private finishSave() {
+    Swal.fire({
+      title: 'Saved!',
+      text: false
+        ? 'Question updated successfully'
+        : 'Question created successfully',
+      icon: 'success',
+    }).then((resp) => {
+      if (resp.value) {
+        this.router.navigate(['']);
+      }
+    });
+  }
+
+  removeCategory(index: number) {
     this.questionCategories.splice(index, 1);
   }
 
-  addNewCategory(category : string) {
+  addNewCategory(category: string) {
     if (category && category.split(' ').join('')) {
       this.questionCategories.push({ category });
     }
   }
 
-  inputValidate() : boolean {
+  inputValidate(): boolean {
     if (!this.question.question) {
       this.questionAlert = true;
       return false;
@@ -71,5 +94,4 @@ export class NewQuestionComponent implements OnInit {
     }
     return true;
   }
-
 }
