@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CategoryDetailComponent } from './category-detail/category-detail.component';
+import { CategoryDetailComponent } from './components/category-detail/category-detail.component';
 
 
 

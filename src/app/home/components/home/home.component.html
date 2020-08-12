@@ -1,70 +1,21 @@
-<h1>Recent questions</h1>
+<h1>Questions Wall</h1>
 <div class="card-columns">
-  <div class="card">
-    <img src="assets/img/question-1.png" class="card-img-top" alt="..." />
+  <div *ngFor="let question of questions" class="card">
+    <img *ngIf="question.img" src="{{ question.img }}" class="card-img-top" alt="..." />
     <div class="card-body">
-      <h5 class="card-title">¿What is a component in Angular?</h5>
-      <p class="card-text">
-        a Component is a special kind of directive that uses a simpler
-        configuration which is suitable for a component-based application
-        structure. This makes it easier to write an app in a way that's similar
-        to using Web Components or using the new Angular's style of application
-        architecture.
+      <h5 class="card-title">{{ question.question }}</h5> 
+      <p *ngIf="question.answers" class="card-text">
+        {{ question.answers[0].answer }}
       </p>
-      <a href="#" class="btn btn-primary">View more</a>
-    </div>
-  </div>
-  <div class="card">
-    <img src="assets/img/Angular-Routing.png" class="card-img-top" alt="..." />
-    <div class="card-body">
-      <h5 class="card-title">¿How to configure routes?</h5>
-      <p class="card-text">
-        When a user navigates to a page, Angular Router performs the following
-        steps in order: it reads the browser URL the user wants to navigate to.
-        it applies a URL redirect (if one is defined) it figures out which
-        router state corresponds to the URL.
-      </p>
-      <a href="#" class="btn btn-primary">View more</a>
-    </div>
-  </div>
-  <div class="card">
-    <img src="assets/img/decorator.jpg" class="card-img-top" alt="..." />
-    <div class="card-body">
-      <h5 class="card-title">¿What is a decorator?</h5>
-      <p class="card-text">
-        Decorators are a design pattern that is used to separate modification or
-        decoration of a class without modifying the original source code. In
-        AngularJS, decorators are functions that allow a service, directive or
-        filter to be modified prior to its usage.
-      </p>
-      <a href="#" class="btn btn-primary">View more</a>
-    </div>
-  </div>
-  <div class="card">
-    <img src="assets/img/shadow-dom.jpg" class="card-img-top" alt="..." />
-    <div class="card-body">
-      <h5 class="card-title">¿What is the shadow DOM?</h5>
-      <p class="card-text">
-        Shadow DOM. Shadow DOM serves for encapsulation. It allows a component
-        to have its very own “shadow” DOM tree, that can't be accidentally
-        accessed from the main document, may have local style rules, and more.
-      </p>
-      <a href="#" class="btn btn-primary">View more</a>
-    </div>
-  </div>
-
-  <div class="card">
-    <img src="assets/img/pure-functions.png" class="card-img-top" alt="..." />
-    <div class="card-body">
-      <h5 class="card-title">¿What is a pure function?</h5>
-      <p class="card-text">
-        In computer programming, a pure function is a function that has the
-        following properties: Its return value is the same for the same
-        arguments (no variation with local static variables, non-local
-        variables, mutable reference arguments or input streams from I/O
-        devices).
-      </p>
-      <a href="#" class="btn btn-primary">View more</a>
+      <div class="row">
+        <div class="col">
+          <a [routerLink]="['/details', question.id ]" class="btn btn-primary btn-block">View more</a>
+        </div>
+        <div class="col">
+          <small>Asked at</small>
+          <p class="text-center">{{ question.date }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>

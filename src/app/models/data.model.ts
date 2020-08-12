@@ -1,7 +1,9 @@
 export class IQuestion {
   id?: string;
+  img?: string;
   question: string;
-  answers: Array<String>;
+  answers: Array<IAnswer>;
+  date?: string;
   categories: Array<ICategory>;
 
   constructor () {
@@ -9,6 +11,7 @@ export class IQuestion {
     this.question = '';
     this.answers = [];
     this.categories = [];
+    this.img = '';
   }
 }
 
@@ -16,6 +19,12 @@ export interface ICategory {
   id?: string;
   category: string;
   questions?: Array<string>;
+}
+
+export interface IAnswer {
+  id?: string;
+  answer: string;
+  date?: string;
 }
 
 export const someCategories: Array<ICategory> = [

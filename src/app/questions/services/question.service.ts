@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { someCategories, ICategory, IQuestion } from '../../models/data.model';
+import { someCategories, ICategory, IQuestion, IAnswer } from '../../models/data.model';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
@@ -15,8 +15,13 @@ export class QuestionService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getQuestionById() {
-    // TBD
+  getQuestionById(id : string) {
+    return this.httpClient.get(`https://question-bank-6ffba.firebaseio.com/questions/${id}.json`)
+    .pipe(
+      map((response : IQuestion) => {
+        return response;
+      })
+    );
   }
 
   getQuestions() {
@@ -47,7 +52,11 @@ export class QuestionService {
   }
 
   addCategry(newCategory: Array<ICategory>) {
-    this.httpClient.post(`https://question-bank-6ffba.firebaseio.com/categories/${this.categoriesArrayId}.json`, newCategory)
+    if (this.categories.length) {
+      this.categories = this.categories.concat(newCategory);
+    }
+    console.log(this.categories, newCategory);
+    this.httpClient.put(`https://question-bank-6ffba.firebaseio.com/categories/${this.categoriesArrayId}.json`, this.categories)
       .subscribe(response => {
         console.log(response);
       });
@@ -67,10 +76,21 @@ export class QuestionService {
     for (const key in response) {
       if (response.hasOwnProperty(key)) {
         const element = response[key];
+        element.id = key;
         questionArray.push(element);
       }
     }
     return questionArray;
   }
 
+  addNewAnswer(question : IQuestion, questionId : string) {
+    this.httpClient.put(`https://question-bank-6ffba.firebaseio.com/questions/${questionId}.json`, question)
+    .subscribe(response => {
+      console.log(response);
+    });
+  }
+
+  deleteQuestion(questionId : string) {
+    return this.httpClient.delete(`https://question-bank-6ffba.firebaseio.com/questions/${questionId}.json`);
+  }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 // Model
-import { ICategory, IQuestion } from '../../../models/data.model';
+import { ICategory, IQuestion, IAnswer } from '../../../models/data.model';
 
 // Services
 import { QuestionService } from '../../services/question.service';
@@ -12,9 +12,10 @@ import { QuestionService } from '../../services/question.service';
   styleUrls: ['./new-question.component.css'],
 })
 export class NewQuestionComponent implements OnInit {
+  
   singleCategory : ICategory = { id: null, category: null };
   categories: Array<ICategory>;
-  answer : string;
+  answer : IAnswer = { answer: '' };
   questionCategories: Array<ICategory> = [];
   questionAlert : boolean = false;
   categoryAlert : boolean = false;
@@ -25,6 +26,8 @@ export class NewQuestionComponent implements OnInit {
   ngOnInit(): void {
     this.questionService.getCategories()
     .subscribe(answer => {
+      console.log(answer);
+      
       this.categories = answer;
     });
   }
@@ -35,11 +38,15 @@ export class NewQuestionComponent implements OnInit {
 
   saveQuestion() {
     if (this.inputValidate()) {
-      console.log('in here');
+      
+      this.answer.date = (this.answer.answer != '')? new Date().toDateString() : null;
+      this.question.date = new Date().toDateString();
       this.question.answers.push(this.answer);
       this.question.categories = this.questionCategories;
+      console.log(this.question);
+      
       this.questionService.saveQuestion(this.question);
-      this.questionService.addCategry(this.questionCategories);
+      this.questionService.addCategry(this.questionCategories); // Validar cuando agregar categoría y cuando no.
     }
   }
 

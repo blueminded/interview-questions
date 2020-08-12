@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ICategory } from '../../models/data.model';
+import { QuestionService } from '../../questions/services/question.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  categories : Array<ICategory> = [];
+
+  constructor(private questionService : QuestionService) { }
 
   ngOnInit(): void {
+
+    this.questionService.getCategories()
+    .subscribe(allCategories => {
+      this.categories = allCategories;
+    });
+
   }
 
 }

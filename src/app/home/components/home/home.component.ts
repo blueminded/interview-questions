@@ -17,8 +17,8 @@ export class HomeComponent implements OnInit {
     this.questionService.getQuestions()
     .subscribe(answer => {
       this.questions = answer;
+      console.log(this.questions);
     });
-
   }
 
 }
