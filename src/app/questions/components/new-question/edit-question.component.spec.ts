@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { IQuestion } from '../../../models/data.model';
 import { ActivatedRoute } from '@angular/router';
 
-fdescribe('EditQuestionComponent', () => {
+describe('EditQuestionComponent', () => {
   let component: NewQuestionComponent;
   let fixture: ComponentFixture<NewQuestionComponent>;
   let questionServiceMock: any;
@@ -89,20 +89,19 @@ fdescribe('EditQuestionComponent', () => {
     expect(categoryName).toBe('Edit the question');
   });
 
-  it('Should display the question to edit', () => {
+  it('Should display the question to edit', async(() => {
     component.edit = true;
     component.titleForm = 'Edit the question';
+
     fixture.detectChanges();
 
-    const element = fixture.debugElement.query(By.css('input[name=question]'));
-    console.log(element.nativeElement.value);
-    expect('demo').toBeTruthy();
-    /*fixture.whenStable().then(() => {
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
       const element = fixture.debugElement.query(
         By.css('input[name=question]')
       );
-      console.log(element.nativeElement.value);
-      expect('demo').toBeTruthy();
-    });*/
-  });
+      const inputText = element.nativeElement.value;
+      expect(inputText).toEqual(component.question.question);
+    });
+  }));
 });
