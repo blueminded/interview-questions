@@ -1,0 +1,21 @@
+<h1>Questions Wall</h1>
+<div class="card-columns">
+  <div *ngFor="let question of questions" class="card">
+    <img *ngIf="question.img" src="{{ question.img }}" class="card-img-top" alt="..." />
+    <div class="card-body">
+      <h5 class="card-title">{{ question.question }}</h5> 
+      <p *ngIf="question.answers" class="card-text">
+        {{ question.answers[0].answer }}
+      </p>
+      <div class="row">
+        <div class="col">
+          <a [routerLink]="['/details', question.id ]" class="btn btn-primary btn-block">View more</a>
+        </div>
+        <div class="col">
+          <small>Asked at</small>
+          <p class="text-center">{{ question.date }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

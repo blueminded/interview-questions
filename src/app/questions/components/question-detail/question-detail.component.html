@@ -1,1 +1,108 @@
-<p>question-detail works!</p>
+<div class="card text-center">
+  <div class="card-header question-title">
+    {{ question.question }}
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <img
+        *ngIf="question.img"
+        src="{{ question.img }}"
+        alt="..."
+        class="figure-img img-fluid"
+      />
+
+      <div *ngIf="question.answers[0]" class="col main-answer">
+        <h5 class="card-title text-left">Main Answer</h5>
+        <div class="text-left">
+          {{ question.answers[0].date | date: "d/MM/y" }}
+        </div>
+        <p class="card-text text-left">{{ question.answers[0].answer }}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-2">
+        <h5 class="card-title text-center">Tags:</h5>
+        <small id="emailHelp" class="form-text text-muted text-left"
+          >Other users commented :</small
+        >
+      </div>
+      <div class="col-9">
+        <span
+          (click)="searchCategory(categoryItem.category)"
+          *ngFor="let categoryItem of question.categories; let i = index"
+          class="badge badge-success d-inline mx-1 my-1 float-left"
+        >
+          {{ categoryItem.category | titlecase }} +
+        </span>
+      </div>
+    </div>
+
+    <div *ngFor="let answerItem of question.answers" class="row">
+      <div *ngIf="answerItem != question.answers[0]" class="col sec-answer">
+        <div class="text-right">{{ answerItem.date | date: "d/MM/y" }}</div>
+        <p class="card-text text-left">{{ answerItem.answer }}</p>
+      </div>
+    </div>
+
+    <hr />
+    <form (ngSubmit)="addAnswer(f)" #f="ngForm">
+      <div class="row">
+        <div class="col-9">
+          <div class="form-group">
+            <h5 class="card-title text-left">Add an answer !</h5>
+            <input
+              type="text"
+              class="form-control"
+              name="newAnswer"
+              [(ngModel)]="newAnswer.answer"
+            />
+            <div
+              *ngIf="answerAlert"
+              class="alert alert-danger p-0 text-center"
+              role="alert"
+            >
+              To add an answer you must fill this field
+            </div>
+            <small id="emailHelp" class="form-text text-muted text-left"
+              >Share your knowledge or your ideas.</small
+            >
+          </div>
+        </div>
+        <div class="col-3">
+          <h5 class="card-title text-left">.</h5>
+          <button
+            type="submit"
+            class="btn btn-primary btn-block"
+            data-toggle="modal"
+            data-target="#exampleModalCenter"
+          >
+            Add
+          </button>
+          <br />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <button
+            type="button"
+            (click)="editQuestion()"
+            class="btn btn-warning float-left"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            (click)="deleteQuestion()"
+            class="btn btn-danger float-left"
+          >
+            Delete
+          </button>
+        </div>
+        <div class="col"></div>
+      </div>
+    </form>
+  </div>
+  <div class="card-footer text-muted"></div>
+</div>

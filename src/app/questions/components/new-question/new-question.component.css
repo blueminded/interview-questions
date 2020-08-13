@@ -5,3 +5,11 @@ h2 {
 textarea {
     resize: none;
 }
+
+.btn-link {
+    text-decoration: none;
+}
+
+.btn-link:hover {
+    font-weight: bolder;
+}

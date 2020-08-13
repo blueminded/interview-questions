@@ -1,0 +1,22 @@
+.main-answer {
+    background: #13EBA2;
+    border: solid 2px #056644; 
+    border-radius: 4%;
+    padding: 20px;
+    margin: 0 10px 20px 10px;
+}
+
+.sec-answer {
+    margin: 5px 10px 0 30px;
+    border: solid 1.5px #056644; 
+    border-radius: 4%;
+    padding: 15px;
+}
+
+.question-title {
+    font-size: 1.5em;
+}
+
+span:hover {
+    cursor: pointer;
+} 

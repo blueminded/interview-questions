@@ -1,41 +1,136 @@
 <div class="container">
-    <h2>Add a new question</h2>
-    <form class="">
-        <div class="form-group" (submit)="saveQuestion('SSS')">
-          <label for="exampleInputEmail1">Main question</label>
-          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your question" required>
-          <small id="emailHelp" class="form-text text-muted">What is an Angular decorator?</small>
-        </div>
+  <h2>{{ titleForm }}</h2>
+
+  <form (ngSubmit)="saveQuestion()" #f="ngForm">
+    <div class="form-group">
+      <label>Main question</label>
+
+      <input
+        type="text"
+        class="form-control"
+        id="question"
+        name="question"
+        required
+        placeholder="Enter your question"
+        [(ngModel)]="question.question"
+      />
+      <small id="emailHelp" class="form-text text-muted"
+        >What is an Angular decorator?</small
+      >
+      <div
+        *ngIf="questionAlert"
+        class="alert alert-danger p-0 text-center"
+        role="alert"
+      >
+        Question is required
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
         <div class="form-group">
-          <label for="exampleInputPassword1">Answer</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+          <label>Answer</label>
+          <textarea
+            class="form-control"
+            id="exampleFormControlTextarea1"
+            name="answer"
+            [(ngModel)]="answer.answer"
+            rows="4"
+          >
+          </textarea>
         </div>
+      </div>
+      <div class="col">
+        <label>Add an image to it</label>
+        <input
+          type="text"
+          class="form-control"
+          id="img"
+          name="img"
+          [(ngModel)]="question.img"
+          autocomplete="off"
+          placeholder="URL"
+        />
+        <small id="emailHelp" class="form-text text-muted"
+          >https://demanuelemilio.github.io/assets/img/nodejs.png</small
+        >
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label>Pick a category</label>
+        <select
+          (change)="categoryChange($event.target.value)"
+          class="form-control"
+        >
+          <option disabled selected value> -- select an option -- </option>
+          <option *ngFor="let categoryItem of categories">{{
+            categoryItem.category | titlecase
+          }}</option>
+        </select>
+      </div>
+      <div class="col">
         <div class="row">
-            <div class="col">
-                <label for="exampleInputPassword1">Pick a category</label>
-                <select (change)="categoryChange($event.target.value)" class="form-control" required>
-                    <option>New category</option>
-                    <option *ngFor="let categoryItem of categories">{{ categoryItem.category }}</option>
-                </select>
-            </div>
-            <div class="col">
-                <label for="exampleInputPassword1">Need a new category ? Add it.</label>
-                <input 
-                    *ngIf="!isNewCategory"
-                    type="text"
-                    class="form-control"
-                    id="new-category"
-                    placeholder="- - -"
-                    disabled>
-                <input 
-                    *ngIf="isNewCategory"
-                    type="text" 
-                    class="form-control"
-                    id="new-category"
-                    placeholder="write the new category">
-                <small id="emailHelp" class="form-text text-muted">JavaScript, Lambdas, Asynchronous ...</small>
-            </div>
-        </div>        
-        <button type="submit" class="btn btn-primary mt-4 float-right">Add question</button>
-      </form>
+          <div class="col">
+            <label>Need a new category ?</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nCategory"
+              name="singleCategory"
+              [(ngModel)]="singleCategory.category"
+              autocomplete="off"
+              maxlength="60"
+              required
+              placeholder="Write the new category"
+            />
+            <small id="emailHelp" class="form-text text-muted"
+              >JavaScript, Lambdas, Asynchronous ...</small
+            >
+          </div>
+          <div class="col">
+            <label> Add it.</label>
+            <button
+              type="button"
+              (click)="addNewCategory(singleCategory.category)"
+              class="btn btn-primary btn-block"
+            >
+              Add Category
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="categoryAlert"
+      class="alert alert-danger p-0 text-center"
+      role="alert"
+    >
+      Choose at least one category
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col text-center">
+        <button type="submit" class="btn btn-primary mt-4 w-75">
+          Save question
+        </button>
+      </div>
+      <div class="col">
+        <label> Categories : </label>
+        <span
+          *ngFor="let categoryItem of questionCategories; let i = index"
+          class="badge badge-success d-inline mx-1 my-1"
+        >
+          {{ categoryItem.category | titlecase }}
+          <button
+            (click)="removeCategory(i)"
+            type="button"
+            class="btn btn-link p-0"
+          >
+            x
+          </button>
+        </span>
+      </div>
+    </div>
+  </form>
 </div>
