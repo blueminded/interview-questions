@@ -37,6 +37,8 @@ describe('CategoryDetailComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+<<<<<<< HEAD
+=======
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -105,4 +107,5 @@ describe('CategoryDetailComponent List', () => {
 
     expect(questions.length).toBe(1);
   });
+>>>>>>> b1437fd472113b64ea5f4c86f108702d49fd3fed
 });
