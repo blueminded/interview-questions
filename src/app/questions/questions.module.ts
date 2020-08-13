@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { QuestionDetailComponent } from './components/question-detail/question-detail.component';
 import { NewQuestionComponent } from './components/new-question/new-question.component';
 import { FormsModule } from '@angular/forms';
-import { QuestionService } from '../questions/services/question.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -12,7 +12,8 @@ import { QuestionService } from '../questions/services/question.service';
   ],
   imports: [
     CommonModule,
-    FormsModule  
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class QuestionsModule {}

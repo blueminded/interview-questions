@@ -22,10 +22,19 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('interview-questions');
   });
 
+<<<<<<< HEAD
+  // it('should render title', () => {
+  //   const fixture = TestBed.createComponent(AppComponent);
+  //   fixture.detectChanges();
+  //   const compiled = fixture.nativeElement;
+  //   expect(compiled.querySelector('.content span').textContent).toContain('interview-questions app is running!');
+  // });
+=======
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('.content span').textContent).toContain('interview-questions app is running!');
   });*/
+>>>>>>> b1437fd472113b64ea5f4c86f108702d49fd3fed
 });

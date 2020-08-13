@@ -18,7 +18,13 @@ describe('QuestionDetailComponent', () => {
     fixture.detectChanges();
   });
 
+<<<<<<< HEAD
+  // it('should create', () => {
+  //   expect(component).toBeTruthy();
+  // });
+=======
   /*it('should create', () => {
     expect(component).toBeTruthy();
   });*/
+>>>>>>> b1437fd472113b64ea5f4c86f108702d49fd3fed
 });
