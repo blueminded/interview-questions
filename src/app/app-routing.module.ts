@@ -4,7 +4,6 @@ import { HomeComponent } from './home/components/home/home.component';
 import { NewQuestionComponent } from './questions/components/new-question/new-question.component';
 import { QuestionDetailComponent } from './questions/components/question-detail/question-detail.component';
 import { CategoryDetailComponent } from './categories/components/category-detail/category-detail.component';
-import { EditQuestionComponent } from './edit/components/edit-question/edit-question.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },

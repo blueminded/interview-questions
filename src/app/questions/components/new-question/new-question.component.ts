@@ -8,6 +8,7 @@ import { QuestionService } from '../../services/question.service';
 import Swal from 'sweetalert2';
 import { Router, ActivatedRoute } from '@angular/router';
 import { cleanCategories } from '../../../helpers/helpers';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-new-question',

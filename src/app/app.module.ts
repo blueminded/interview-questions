@@ -9,6 +9,7 @@ import { QuestionsModule } from './questions/questions.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CategoryDetailComponent } from './categories/components/category-detail/category-detail.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CategoryDetailComponent } from './categories/components/category-detail
     AppRoutingModule,
     QuestionsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent],
