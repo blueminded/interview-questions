@@ -4,7 +4,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CategoryDetailComponent } from './category-detail.component';
 import { QuestionService } from '../../../questions/services/question.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { element } from 'protractor';
 import { By } from '@angular/platform-browser';
 import { IQuestion } from '../../../models/data.model';
 
@@ -34,7 +33,7 @@ describe('CategoryDetailComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CategoryDetailComponent);
-    route = TestBed.get(ActivatedRoute);
+    route = TestBed.inject(ActivatedRoute);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -51,8 +50,27 @@ describe('CategoryDetailComponent', () => {
     expect(categoryName).toBe('Category : Demo Category');
   });
 
-  it('should render list questions in category', () => {
-    let demo = questionServiceMock.getQuestions.and.returnValue({
+  it('Should display No questions when empty category', () => {
+    fixture.detectChanges();
+
+    const h2Element = fixture.debugElement.query(By.css('h2'));
+    const h2ElementText = h2Element.nativeElement.textContent;
+    expect(h2ElementText).toBe('Not questions found');
+  });
+});
+
+describe('CategoryDetailComponent List', () => {
+  let component: CategoryDetailComponent;
+  let fixture: ComponentFixture<CategoryDetailComponent>;
+  let questionServiceMock: any;
+  let route: ActivatedRoute;
+
+  beforeEach(async(() => {
+    questionServiceMock = jasmine.createSpyObj('QuestionService', [
+      'getQuestions',
+    ]);
+
+    questionServiceMock.getQuestions.and.returnValue({
       subscribe: () => {
         const question: IQuestion = {
           id: 'id',
@@ -62,34 +80,29 @@ describe('CategoryDetailComponent', () => {
           categories: [{ category: 'Demo category' }],
         };
 
-        return [question];
+        component.questions.push(question);
       },
     });
-    console.log(
-      demo((response) => {
-        console.log('we');
-      })
-    );
 
-    console.log(questionServiceMock.get);
+    TestBed.configureTestingModule({
+      declarations: [CategoryDetailComponent],
+      imports: [RouterTestingModule],
+      providers: [{ provide: QuestionService, useValue: questionServiceMock }],
+    }).compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CategoryDetailComponent);
+    route = TestBed.inject(ActivatedRoute);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should render at least  1 question in category detail', () => {
     fixture.detectChanges();
     const questions = fixture.debugElement.queryAll(By.css('.card'));
     console.log(questions);
 
-    expect(component).toBeTruthy();
-  });
-
-  it('Should display No questions when empty category', () => {
-    questionServiceMock.getQuestions.and.returnValue({
-      subscribe: () => {
-        return [];
-      },
-    });
-
-    fixture.detectChanges();
-
-    const h2Element = fixture.debugElement.query(By.css('h2'));
-    const h2ElementText = h2Element.nativeElement.textContent;
-    expect(h2ElementText).toBe('Not questions found');
+    expect(questions.length).toBe(1);
   });
 });
