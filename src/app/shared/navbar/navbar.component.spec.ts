@@ -44,21 +44,4 @@ describe('NavbarComponent', () => {
 
     expect(count).toBe(1);
   });
-
-  /*it('should have at least one category', () => {
-    const categories: ICategory[] = [
-      { category: 'My Category one' },
-      { category: 'My Category two' },
-    ];
-
-    component.categories = categories;
-    fixture.detectChanges();
-
-    let elements = fixture.debugElement.queryAll(By.css('a'));
-    const count = elements.filter(
-      (element) => element.nativeElement.textContent === 'New Question +'
-    ).length;
-
-    expect(count).toBe(1);
-  });*/
 });

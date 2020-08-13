@@ -101,8 +101,6 @@ describe('CategoryDetailComponent List', () => {
   it('should render at least  1 question in category detail', () => {
     fixture.detectChanges();
     const questions = fixture.debugElement.queryAll(By.css('.card'));
-    console.log(questions);
-
     expect(questions.length).toBe(1);
   });
 });
