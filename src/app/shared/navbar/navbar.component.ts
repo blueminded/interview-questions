@@ -10,11 +10,9 @@ import { QuestionService } from '../../questions/services/question.service';
 export class NavbarComponent implements OnInit {
   categories: Array<ICategory> = [];
 
-  constructor(private questionService: QuestionService) {}
+  constructor(public questionService: QuestionService) {}
 
   ngOnInit(): void {
-    this.questionService.getCategories().subscribe((allCategories) => {
-      this.categories = allCategories;
-    });
+    this.questionService.getCategories().subscribe();
   }
 }

@@ -13,7 +13,7 @@ import { cleanCategories } from '../../helpers/helpers';
   providedIn: 'root',
 })
 export class QuestionService {
-  categories: Array<ICategory> = [];
+  public categories: Array<ICategory> = [];
   questions: Array<IQuestion>;
   categoriesArrayId: string = null;
 

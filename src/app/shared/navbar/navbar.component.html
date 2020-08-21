@@ -36,7 +36,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a
-            *ngFor="let categoryItem of categories"
+            *ngFor="let categoryItem of questionService.categories"
             class="dropdown-item"
             [routerLink]="['/categories', categoryItem.category]"
           >
